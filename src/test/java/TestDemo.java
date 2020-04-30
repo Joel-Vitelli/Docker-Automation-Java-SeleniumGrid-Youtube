@@ -18,7 +18,7 @@ public class TestDemo {
     private BusinessInterface googleSelectFirstResultBusiness;
     @Before
     public void setUpTest() {
-        System.setProperty("webdriver.chrome.driver", "C:/Users/Dante/Desktop/Crowdar/demo/src/main/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.youtube.com/");
