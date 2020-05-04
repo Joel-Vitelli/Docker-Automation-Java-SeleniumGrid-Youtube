@@ -1,0 +1,40 @@
+version: '3'
+services:
+  web:
+    container_name: jenkins-container
+    ports:
+    - "8080:8080"
+    - "50000:50000"
+    image: jenkins
+
+  selenium-hub:
+    container_name: selenium-hub
+    image: selenium/hub
+    ports:
+    - "4444:4444"
+
+  seleniumChrome:
+    container_name: chrome
+    image: selenium/node-chrome-debug
+    ports:
+      - "32769:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+
+  seleniumFirefox:
+    container_name: firefox
+    image: selenium/node-firefox-debug
+    ports:
+      - "32768:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
