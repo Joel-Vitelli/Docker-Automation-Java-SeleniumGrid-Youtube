@@ -9,24 +9,43 @@ import org.openqa.selenium.WebElement;
 
 public class YoutubeHomePage {
 
-    private WebDriver driver;
+    private WebDriver chrome;
+    private WebDriver firefox;
 
-    public YoutubeHomePage(WebDriver driver) {
+    public YoutubeHomePage(WebDriver chrome, WebDriver firefox) {
         super();
-        this.driver = driver;
+        this.chrome = chrome;
+        this.firefox = firefox;
     }
 
-    public void completeText(String texto) {
-        WebElement search = driver.findElement(By.cssSelector("#search-input.ytd-searchbox-spt input"));
-        search.clear();
-        search.sendKeys(texto);
-        search.sendKeys(Keys.TAB);
+    public void completeTextChrome(String texto) {
+        WebElement searchChrome = chrome.findElement(By.cssSelector("#search-input.ytd-searchbox-spt input"));
+        searchChrome.clear();
+        searchChrome.sendKeys(texto);
+        searchChrome.sendKeys(Keys.TAB);
     }
 
-    public void clickButton() {
-        WebElement btnSearch = driver.findElement(By.cssSelector("#search-icon-legacy"));
-        btnSearch.click();
-
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+    public void completeTextFirefox(String texto) {
+        WebElement searchFirefox = firefox.findElement(By.cssSelector("#search-input.ytd-searchbox-spt input"));
+        searchFirefox.clear();
+        searchFirefox.sendKeys(texto);
+        searchFirefox.sendKeys(Keys.TAB);
+        firefox.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
+
+    public void clickButtonChrome() {
+        WebElement btnSearchChrome = chrome.findElement(By.cssSelector("#search-icon-legacy"));
+        btnSearchChrome.click();
+
+        chrome.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+    }
+    public void clickButtonFirefox() {
+        WebElement btnSearchfirefox = firefox.findElement(By.cssSelector("#search-icon-legacy"));
+        btnSearchfirefox.click();
+
+        firefox.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    }
+
+
 }

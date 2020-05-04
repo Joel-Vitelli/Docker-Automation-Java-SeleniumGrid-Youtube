@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demoYoutubeAutomation" />
         <module name="crowdarAutomationDemo" />
+        <module name="demoYoutubeAutomation" />
+        <module name="DockerAutomationDemo" />
       </profile>
     </annotationProcessing>
   </component>

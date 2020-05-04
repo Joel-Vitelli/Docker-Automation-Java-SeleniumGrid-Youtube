@@ -11,16 +11,20 @@ public class YoutubeSearchBusiness implements BusinessInterface {
     private YoutubeHomePage homePage;
     private YoutubeResultPage resultPage;
 
-    public YoutubeSearchBusiness(WebDriver driver) {
+    public YoutubeSearchBusiness(WebDriver chrome, WebDriver firefox) {
         super();
-        this.homePage = new YoutubeHomePage(driver);
-        this.resultPage = new YoutubeResultPage(driver);
+        this.homePage = new YoutubeHomePage(chrome, firefox);
+        this.resultPage = new YoutubeResultPage(chrome, firefox);
     }
 
     public void perform(String text) {
-        homePage.completeText(text);
-        homePage.clickButton();
+        homePage.completeTextChrome(text);
+        homePage.clickButtonChrome();
+        homePage.completeTextFirefox(text);
+        homePage.clickButtonFirefox();
 
-        Assert.assertEquals(text + " - YouTube", resultPage.getTitleText());
+        Assert.assertEquals(text + " - YouTube", resultPage.getTitleTextChrome());
+        Assert.assertEquals(text + " - YouTube", resultPage.getTitleTextFirefox());
     }
+
 }

@@ -1,31 +1,44 @@
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import com.academy.crowdar.business.YoutubeSearchBusiness;
 import com.academy.crowdar.business.YoutubeSelectFirstResultBusiness;
 import com.academy.crowdar.business.interfaces.BusinessInterface;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import sun.jvm.hotspot.utilities.soql.JSJavaScriptEngine;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class TestDemo {
-    /**
-     * Descargar previamente el chrome driver
-     * https://chromedriver.chromium.org/downloads
-     */
-    private WebDriver driver;
+
     private BusinessInterface googleSearchBusiness;
     private BusinessInterface googleSelectFirstResultBusiness;
-    @Before
-    public void setUpTest() {
-        System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.youtube.com/");
-        googleSearchBusiness = new YoutubeSearchBusiness(driver);
-        googleSelectFirstResultBusiness = new YoutubeSelectFirstResultBusiness(driver);
-    }
 
+    Capabilities chromeCapabilities = DesiredCapabilities.chrome();
+    Capabilities firefoxCapabilities = DesiredCapabilities.firefox();
+    private WebDriver chrome;
+    private WebDriver firefox;
+
+    @Before
+    public void setUpTest() throws MalformedURLException {
+
+        chrome = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeCapabilities);
+        firefox = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), firefoxCapabilities);
+        chrome.manage().window().maximize();
+        firefox.manage().window().maximize();
+        chrome.get("https://www.youtube.com/");
+        firefox.get("https://www.youtube.com/");
+
+
+        googleSearchBusiness = new YoutubeSearchBusiness(chrome, firefox);
+        googleSelectFirstResultBusiness = new YoutubeSelectFirstResultBusiness(chrome, firefox);
+    }
 
     @Test
     public void whenTheUserFindTheWordJavaInYoutube() {
@@ -38,12 +51,13 @@ public class TestDemo {
     public void whenTheUserFindTheWordCrowdarInYoutube() {
         String searchText = "crowdar";
         googleSearchBusiness.perform(searchText);
-        googleSelectFirstResultBusiness.perform("2");
+        googleSelectFirstResultBusiness.perform("5");
     }
 
     @After
     public void endTest() {
-        driver.quit();
+        chrome.quit();
+        firefox.quit();
     }
 }
 

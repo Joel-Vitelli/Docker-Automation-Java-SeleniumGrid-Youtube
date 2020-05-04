@@ -5,7 +5,7 @@ services:
     ports:
     - "8080:8080"
     - "50000:50000"
-    image: jenkins
+    image: jenkins/jenkins
 
   selenium-hub:
     container_name: selenium-hub
