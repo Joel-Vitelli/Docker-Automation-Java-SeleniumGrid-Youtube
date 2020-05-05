@@ -1,11 +1,5 @@
 version: '3'
 services:
-  web:
-    container_name: jenkins-container
-    ports:
-    - "8080:8080"
-    - "50000:50000"
-    image: jenkins/jenkins
 
   selenium-hub:
     container_name: selenium-hub
